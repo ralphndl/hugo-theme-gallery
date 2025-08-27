@@ -11,6 +11,11 @@
   display: none;
 }
 
+.pswp-caption-content-exif {
+  font-size: 0.8em; /* smaller */
+  color: #666;      /* grey */
+}
+
 .pswp__dynamic-caption a {
   color: #fff;
 }

@@ -57,6 +57,9 @@
                   {{ if .Model }}
                     {{ .Make }} {{ .Model }}<br />
                   {{ end }}
+                  {{ if .Copyright }}
+                    © {{ .Copyright }}<br />
+                  {{ end }}
               </span>
               <span class="pswp-caption-content-exif">{{ with .FocalLength }}{{ . }}mm &emsp14;&middot;&emsp14; {{ end }}</span>
               <span class="pswp-caption-content-exif">{{ with .FNumber }}f/{{ div (math.Round (mul (float .) 10)) 10 }} &emsp14;&middot;&emsp14; {{ end }}</span>
