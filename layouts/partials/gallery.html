@@ -66,6 +66,14 @@
                     "SONY" "Sony"
                   }}
 
+                  {{ with .Copyright }}
+                    {{ if hasPrefix . "©" }}
+                      {{ . }}<br />
+                    {{ else }}
+                      © {{ . }}<br />
+                    {{ end }}
+                  {{ end }}
+
                   {{ with .Make }}
                     {{ index $makeMap . | default . }}
                   {{ end }}
@@ -76,14 +84,6 @@
 
                   {{ with .LensModel }}
                     {{ . }}<br />
-                  {{ end }}
-
-                  {{ with .Copyright }}
-                    {{ if hasPrefix . "©" }}
-                      {{ . }}<br />
-                    {{ else }}
-                      © {{ . }}<br />
-                    {{ end }}
                   {{ end }}
 
                   {{ with .FocalLength }}{{ . }}mm &emsp14;&middot;&emsp14; {{ end }}
