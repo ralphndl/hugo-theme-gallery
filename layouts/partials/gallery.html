@@ -67,15 +67,15 @@
                   {{ end }}
 
                   {{ if .Copyright }}
-                    {{ .Copyright }}<br />
+                    © {{ .Copyright }}<br />
                   {{ end }}
-              </span>
-              <span class="pswp-caption-content-exif">{{ with .FocalLength }}{{ . }}mm &emsp14;&middot;&emsp14; {{ end }}</span>
-              <span class="pswp-caption-content-exif">{{ with .FNumber }}f/{{ div (math.Round (mul (float .) 10)) 10 }} &emsp14;&middot;&emsp14; {{ end }}</span>
-              <span class="pswp-caption-content-exif">{{ with .ExposureTime }}{{ . }}s &emsp14;&middot;&emsp14; {{ end }}</span>
-              <span class="pswp-caption-content-exif">{{ with .ISO }}ISO {{ . }}{{ end }}</span>
+
+                  {{ with .FocalLength }}{{ . }}mm &emsp14;&middot;&emsp14; {{ end }}
+                  {{ with .FNumber }}f/{{ div (math.Round (mul (float .) 10)) 10 }} &emsp14;&middot;&emsp14; {{ end }}
+                  {{ with .ExposureTime }}{{ . }}s &emsp14;&middot;&emsp14; {{ end }}
+                  {{ with .ISO }}ISO {{ . }}{{ end }}
                 {{ end }}
-              {{ end }}
+              </span>
             </span>
           {{ end }}
 
