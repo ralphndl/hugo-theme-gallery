@@ -29,9 +29,6 @@
       }}
     {{ end }}
     {{ $publishResources := default true .Params.build.publishResources }}
-    {{ $modelMap := dict
-      "SONY ILCE-7M3" "Sony A7 III"
-    }}
     {{ range sort $images (.Params.sort_by | default "Name") (.Params.sort_order | default "asc") }}
       {{ $image := .image }}
       {{ $thumbnail := $image.Filter (slice images.AutoOrient (images.Process "fit 600x600")) }}
@@ -57,19 +54,20 @@
               </span>
               <span class="pswp-caption-content-exif">
                 {{ with $image.Exif.Tags }}
-                  {{ $make   := .Make | default "" }}
-                  {{ $model0 := .Model | default "" }}
-                  {{ $pretty := index $modelMap $model0 | default $model0 }}
+                  {{ $modelMap := dict
+                    "SONY ILCE-7M3" "Sony A7 III"
+                    "SONY ILCE-7RM3" "Sony A7R III"
+                    "SONY ILCE-7M4"  "Sony A7 IV"
+                  }}
 
-                  {{/* Wenn $pretty schon mit der Marke beginnt, doppelte Marke vermeiden */}}
-                  {{ if or (not $make) (hasPrefix (lower $pretty) (lower $make)) }}
-                    {{ if $pretty }}{{ $pretty }}<br />{{ end }}
-                  {{ else }}
-                    {{ if or $make $pretty }}{{ $make }} {{ $pretty }}<br />{{ end }}
+                  {{ with .Model }}
+                    {{ index $modelMap . | default . }}<br />
                   {{ end }}
+
                   {{ if .Copyright }}
-                    © {{ .Copyright }}<br />
+                    {{ .Copyright }}<br />
                   {{ end }}
+                {{ end }}
               </span>
               <span class="pswp-caption-content-exif">{{ with .FocalLength }}{{ . }}mm &emsp14;&middot;&emsp14; {{ end }}</span>
               <span class="pswp-caption-content-exif">{{ with .FNumber }}f/{{ div (math.Round (mul (float .) 10)) 10 }} &emsp14;&middot;&emsp14; {{ end }}</span>
