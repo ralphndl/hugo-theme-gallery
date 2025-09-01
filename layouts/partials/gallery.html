@@ -29,6 +29,14 @@
       }}
     {{ end }}
     {{ $publishResources := default true .Params.build.publishResources }}
+    {{ $modelMap := dict
+      "SONY ILCE-7M3" "Sony A7 III"
+      /* weitere Mappings hier ergänzen:
+        "SONY ILCE-7M3" "Sony A7 III",
+        "SONY ILCE-7M4"  "Sony A7 IV",
+        ...
+      */
+    }}
     {{ range sort $images (.Params.sort_by | default "Name") (.Params.sort_order | default "asc") }}
       {{ $image := .image }}
       {{ $thumbnail := $image.Filter (slice images.AutoOrient (images.Process "fit 600x600")) }}
@@ -54,8 +62,15 @@
               </span>
               <span class="pswp-caption-content-exif">
                 {{ with $image.Exif.Tags }}
-                  {{ if .Model }}
-                    {{ .Make }} {{ .Model }}<br />
+                  {{ $make   := .Make | default "" }}
+                  {{ $model0 := .Model | default "" }}
+                  {{ $pretty := index $modelMap $model0 | default $model0 }}
+
+                  {{/* Wenn $pretty schon mit der Marke beginnt, doppelte Marke vermeiden */}}
+                  {{ if or (not $make) (hasPrefix (lower $pretty) (lower $make)) }}
+                    {{ if $pretty }}{{ $pretty }}<br />{{ end }}
+                  {{ else }}
+                    {{ if or $make $pretty }}{{ $make }} {{ $pretty }}<br />{{ end }}
                   {{ end }}
                   {{ if .Copyright }}
                     © {{ .Copyright }}<br />
