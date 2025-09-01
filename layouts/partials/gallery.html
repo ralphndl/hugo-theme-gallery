@@ -52,22 +52,35 @@
               <span class="pswp-caption-content-date">
                 {{ with .Date}}{{ . | time.Format ":date_full" }}<br />{{ end }}
               </span>
+
+              {{/* --- EXIF mit Mapping --- */}}
               <span class="pswp-caption-content-exif">
                 {{ with $image.Exif.Tags }}
-                  {{ if .Model }}
-                    {{ .Make }} {{ .Model }}<br />
+                  {{ $modelMap := dict
+                    "SONY ILCE-7M3" "Sony A7 III"
+                    "SONY ILCE-7RM3" "Sony A7R III"
+                    "SONY ILCE-7M4"  "Sony A7 IV"
+                  }}
+
+                  {{ with .Model }}
+                    {{ index $modelMap . | default . }}<br />
                   {{ end }}
+
                   {{ if .Copyright }}
-                    © {{ .Copyright }}<br />
+                    {{ .Copyright }}<br />
                   {{ end }}
               </span>
               <span class="pswp-caption-content-exif">{{ with .FocalLength }}{{ . }}mm &emsp14;&middot;&emsp14; {{ end }}</span>
               <span class="pswp-caption-content-exif">{{ with .FNumber }}f/{{ div (math.Round (mul (float .) 10)) 10 }} &emsp14;&middot;&emsp14; {{ end }}</span>
               <span class="pswp-caption-content-exif">{{ with .ExposureTime }}{{ . }}s &emsp14;&middot;&emsp14; {{ end }}</span>
               <span class="pswp-caption-content-exif">{{ with .ISO }}ISO {{ . }}{{ end }}</span>
-            {{ end }}
+                {{ end }}
+              {{ end }}
+            </span>
           {{ end }}
-        <meta itemprop="contentUrl" content="{{ $image.RelPermalink }}" />        {{ with site.Params.Author }}
+
+        <meta itemprop="contentUrl" content="{{ $image.RelPermalink }}" />
+        {{ with site.Params.Author }}
           <span itemprop="creator" itemtype="https://schema.org/Person" itemscope>
             <meta itemprop="name" content="{{ site.Params.Author.name }}" />
           </span>
