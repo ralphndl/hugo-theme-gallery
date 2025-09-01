@@ -31,11 +31,6 @@
     {{ $publishResources := default true .Params.build.publishResources }}
     {{ $modelMap := dict
       "SONY ILCE-7M3" "Sony A7 III"
-      /* weitere Mappings hier ergänzen:
-        "SONY ILCE-7M3" "Sony A7 III",
-        "SONY ILCE-7M4"  "Sony A7 IV",
-        ...
-      */
     }}
     {{ range sort $images (.Params.sort_by | default "Name") (.Params.sort_order | default "asc") }}
       {{ $image := .image }}
