@@ -57,13 +57,21 @@
               <span class="pswp-caption-content-exif">
                 {{ with $image.Exif.Tags }}
                   {{ $modelMap := dict
-                    "SONY ILCE-7M3" "Sony A7 III"
-                    "SONY ILCE-7RM3" "Sony A7R III"
-                    "SONY ILCE-7M4"  "Sony A7 IV"
+                    "ILCE-7M3" "A7 III"
+                    "ILCE-7RM3" "A7R III"
+                    "ILCE-7M4"  "A7 IV"
+                  }}
+
+                  {{ $makeMap := dict
+                    "SONY" "Sony"
                   }}
 
                   {{ with .Model }}
-                    {{ index $modelMap . | default . }}<br />
+                    {{ index $makeMap . | default . }} {{ index $modelMap . | default . }}<br />
+                  {{ end }}
+
+                  {{ with .LensModel }}
+                    {{ .LensModel }} <br />
                   {{ end }}
 
                   {{ if .Copyright }}
