@@ -78,8 +78,12 @@
                     {{ . }}<br />
                   {{ end }}
 
-                  {{ if .Copyright }}
-                    {{ .Copyright }}<br />
+                  {{ with .Copyright }}
+                    {{ if hasPrefix . "©" }}
+                      {{ . }}<br />
+                    {{ else }}
+                      © {{ . }}<br />
+                    {{ end }}
                   {{ end }}
 
                   {{ with .FocalLength }}{{ . }}mm &emsp14;&middot;&emsp14; {{ end }}
